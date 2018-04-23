@@ -54,6 +54,12 @@ RSpec.describe ServiceMonitor::CLI do
         it 'accepts a `--help` argument' do
           expect(options.request_help).to eq(true)
         end
+
+        it 'sets `request_help` if no args supplied' do
+          argv.clear
+          expect(argv).to eq([])
+          expect(options.request_help).to eq(true)
+        end
       end
 
     end

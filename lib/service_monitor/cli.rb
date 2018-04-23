@@ -14,8 +14,9 @@ module ServiceMonitor
     end
 
     def call
-      options, host = parse(argv)
-      #NetworkMonitor::PingRunner.new(host, options)
+      options, hostname = parse(argv)
+      return -1 unless valid?(options, hostname)
+
     end
 
     # Convert argv into a set of options
@@ -24,7 +25,8 @@ module ServiceMonitor
       options = OpenStruct.new
       options.duration = 60
       options.interval = 10
-      options.request_help = false
+      options.request_help = argv.empty?
+
 
       opt_parser = OptionParser.new do |opts|
         opts.banner = 'Usage: service_monitor [options] <hostname>'
@@ -45,19 +47,20 @@ module ServiceMonitor
         end
       end
 
-      opt_parser.parse!(argv)
-      host = argv.pop
+      remaining_args = opt_parser.parse!(argv)
+      hostname = remaining_args.pop
 
-      if options.request_help || !valid?(options, host)
+      if !valid?(options, hostname)
         print_help(opt_parser)
       end
 
-      [options, host]
+      [options, hostname]
     end
 
     def valid?(options, hostname)
+      return false if options.request_help
+
       if hostname.nil?
-        puts "<hostname> argument is required"
         return false
       end
       true
@@ -65,9 +68,13 @@ module ServiceMonitor
 
     private
 
-    def print_help(opts)
+    def print_help(opts, hostname)
       puts 'Service Monitor: Aggregate average response times across service types.'
       puts opts
+      if hostname.nil?
+        puts ""
+        puts "Hostname argument is missing."
+      end
     end
 
   end
