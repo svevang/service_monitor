@@ -20,15 +20,30 @@ RSpec.describe ServiceMonitor::CLI do
     end
 
     context 'options' do
-      let(:argv) { ['--duration', '61', '--interval', '8'] }
       subject(:options){ cli.parse(argv) }
 
-      it 'accepts a --duration argument' do
-        expect(options.duration).to eq(61)
+      context "basic CLI parameters" do
+        let(:argv) { ['--duration', '61', '--interval', '8'] }
+
+        it 'accepts a `--duration` argument' do
+          expect(options.duration).to eq(61)
+        end
+
+        it 'accepts a `--interval` argument' do
+          expect(options.interval).to eq(8)
+        end
       end
 
-      it 'accepts a --interval argument' do
-        expect(options.interval).to eq(8)
+      context "CLI help, print options" do
+        before do
+          expect(ServiceMonitor::CLI).to receive(:print_help)
+        end
+
+        let(:argv) { ["--help"] }
+
+        it 'accepts a `--help` argument' do
+          expect(options.help).to eq(true)
+        end
       end
     end
   end

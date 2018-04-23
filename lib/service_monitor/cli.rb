@@ -13,6 +13,7 @@ module ServiceMonitor
       options = OpenStruct.new
       options.duration = 60
       options.interval = 10
+      options.help = false
 
       opt_parser = OptionParser.new do |opts|
         opts.banner = 'Usage: service_monitor [options]'
@@ -28,13 +29,23 @@ module ServiceMonitor
           options.interval = interval
         end
 
+        opts.on_tail('-h', '--help', 'Show this message') do |is_help|
+          options.help = is_help
+          self.print_help(opts)
+        end
       end
+
       res = opt_parser.parse!(argv)
 
-
       options
-
-
     end
+
+    private
+
+    def self.print_help(opts)
+      puts 'Service Monitor: Aggregate average response times across service types.'
+      puts opts
+    end
+
   end
 end
