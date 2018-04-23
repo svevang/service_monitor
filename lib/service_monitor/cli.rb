@@ -7,16 +7,27 @@ module ServiceMonitor
   # Takes in a argv style list of options.
   class CLI
 
+    attr_reader :argv
+
+    def initialize(argv)
+      @argv = argv || []
+    end
+
+    def call
+      options, host = parse(argv)
+      #NetworkMonitor::PingRunner.new(host, options)
+    end
+
     # Convert argv into a set of options
-    def self.parse(argv)
+    def parse(argv)
 
       options = OpenStruct.new
       options.duration = 60
       options.interval = 10
-      options.help = false
+      options.request_help = false
 
       opt_parser = OptionParser.new do |opts|
-        opts.banner = 'Usage: service_monitor [options]'
+        opts.banner = 'Usage: service_monitor [options] <hostname>'
 
         opts.separator ''
         opts.separator 'Specific options:'
@@ -30,19 +41,31 @@ module ServiceMonitor
         end
 
         opts.on_tail('-h', '--help', 'Show this message') do |is_help|
-          options.help = is_help
-          self.print_help(opts)
+          options.request_help = is_help
         end
       end
 
-      res = opt_parser.parse!(argv)
+      opt_parser.parse!(argv)
+      host = argv.pop
 
-      options
+      if options.request_help || !valid?(options, host)
+        print_help(opt_parser)
+      end
+
+      [options, host]
+    end
+
+    def valid?(options, hostname)
+      if hostname.nil?
+        puts "<hostname> argument is required"
+        return false
+      end
+      true
     end
 
     private
 
-    def self.print_help(opts)
+    def print_help(opts)
       puts 'Service Monitor: Aggregate average response times across service types.'
       puts opts
     end
