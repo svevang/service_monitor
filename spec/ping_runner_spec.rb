@@ -62,5 +62,11 @@ RSpec.describe ServiceMonitor::PingRunner do
       end
     end
 
+    context "#finished?" do
+      it "returns a boolean if the runner has completed its run" do
+        expect(ping_runner.finished?).to eq(false)
+      end
+    end
   end
+
 end
