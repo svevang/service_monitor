@@ -26,7 +26,7 @@ module ServiceMonitor
       options, hostname = parse(argv)
       return -1 unless valid?(options, hostname)
 
-      puts ServiceMonitor::PingRunner.new(hostname, options).call
+      puts ServiceMonitor::PingRunner.new(hostname, options).run!
     end
 
     # Convert argv into a set of options

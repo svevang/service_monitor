@@ -23,7 +23,7 @@ module ServiceMonitor
         puts ping_time
     end
 
-    def call
+    def run!
       return -1 unless host_exists?
       start!
 

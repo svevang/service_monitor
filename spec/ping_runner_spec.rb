@@ -52,14 +52,14 @@ RSpec.describe ServiceMonitor::PingRunner do
       end
     end
 
-    context "#call" do
+    context "#run!" do
       before do
         expect(ping_runner).to receive(:do_ping).at_least(:once).with(Net::Ping) { 0.00001 }
       end
 
       it "sets a start time when the runner is called" do
         expect(ping_runner.start_time).to be_nil
-        ping_runner.call
+        ping_runner.run!
         expect(ping_runner.start_time).to be_truthy
         expect(ping_runner.start_time.class).to be(Time)
       end
