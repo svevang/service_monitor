@@ -1,5 +1,6 @@
 require 'ostruct'
 require 'optparse'
+require 'descriptive_statistics'
 require 'pry'
 
 module ServiceMonitor
@@ -26,7 +27,18 @@ module ServiceMonitor
       options, hostname = parse(argv)
       return -1 unless valid?(options, hostname)
 
-      puts ServiceMonitor::PingRunner.new(hostname, options).run!
+      results = ServiceMonitor::PingRunner.new(hostname, options).run!
+
+      p = lambda { |sec| ServiceMonitor::PrintUtils::formatted_milli(sec) }
+
+      puts ""
+      puts "min:   #{p.call(results.min)}"
+      puts "max:   #{p.call(results.max)}"
+      puts "stddev:#{p.call(results.standard_deviation)}"
+
+      puts "p95:   #{p.call(results.percentile(95))}"
+      puts "p99:   #{p.call(results.percentile(99))}"
+
     end
 
     # Convert argv into a set of options

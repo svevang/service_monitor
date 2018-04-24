@@ -23,8 +23,8 @@ module ServiceMonitor
         print_ping(ping_time)
         sleep(seconds_until_interval(i+1))
       end
-      # TODO return something real here
-      results.last
+
+      results
 
     end
 
@@ -38,10 +38,6 @@ module ServiceMonitor
 
     def setup_pinger
       Net::Ping::HTTP.new(host, port=options.port)
-    end
-
-    def print_ping(ping_time)
-        puts ping_time
     end
 
     def seconds_until_interval(ping_offset)
@@ -77,6 +73,10 @@ module ServiceMonitor
 
     def finished?
       Time.now > start_time + options.duration
+    end
+
+    def print_ping(ping_time)
+      puts ServiceMonitor::PrintUtils::formatted_milli(ping_time)
     end
 
   end
