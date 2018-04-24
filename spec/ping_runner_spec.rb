@@ -95,6 +95,15 @@ RSpec.describe ServiceMonitor::PingRunner do
           expect(ping_runner.finished?).to eq(true)
         end
       end
+
+      context "#interval" do
+        let(:interval) { 2.5 }
+        it "calculates when the next interval begins based on the runner start time and ping count" do
+          expect(ping_runner.interval(0)).to eq(start_time)
+          expect(ping_runner.interval(1)).to eq(start_time + 2.5)
+          expect(ping_runner.interval(3)).to eq(start_time + 7.5)
+        end
+      end
     end
   end
 

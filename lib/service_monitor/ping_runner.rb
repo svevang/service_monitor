@@ -29,6 +29,10 @@ module ServiceMonitor
 
     end
 
+    def interval(ping_offset)
+      start_time + (options.interval * ping_offset)
+    end
+
     def do_ping(pinger)
       pinger.ping
       pinger.duration
