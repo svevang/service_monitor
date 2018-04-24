@@ -29,7 +29,7 @@ module ServiceMonitor
 
     end
 
-    def interval(ping_offset)
+    def interval_begins_at(ping_offset)
       start_time + (options.interval * ping_offset)
     end
 
