@@ -25,7 +25,6 @@ module ServiceMonitor
 
       pinger = setup_pinger
       ping_time = do_ping(pinger)
-      puts ping_time
       ping_time
 
     end
