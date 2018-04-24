@@ -1,6 +1,7 @@
 require 'ostruct'
 require 'net/ping'
 require 'pry'
+require 'timecop'
 
 RSpec.describe ServiceMonitor::PingRunner do
   let(:interval) { 0.0001 }
@@ -21,7 +22,7 @@ RSpec.describe ServiceMonitor::PingRunner do
     it { expect(http_pinger.host).to eq('gitlab.com') }
     it { expect(http_pinger.port).to eq(80) }
 
-    context "custom options changes pinger" do
+    context "Customized port changes pinger port ivars" do
       let(:options){
         options = ServiceMonitor::CLI.default_options
         options.port = 443
@@ -33,7 +34,7 @@ RSpec.describe ServiceMonitor::PingRunner do
 
   end
 
-  context "Invoking the ping runner, application state." do
+  context "PingRunner is invoked" do
     before do
       expect(ping_runner).to receive(:do_ping).with(Net::Ping) { 0.00001 }
     end
@@ -62,9 +63,37 @@ RSpec.describe ServiceMonitor::PingRunner do
       end
     end
 
-    context "#finished?" do
-      it "returns a boolean if the runner has completed its run" do
+    context "PingRunner measures time" do
+      let(:interval) { 10 }
+      let(:duration) { 60 }
+      let(:start_time) { Time.local(2018, 1, 1, 0, 0, 0) }
+
+      before do
+        Timecop.freeze(start_time)
+        ping_runner.call
         expect(ping_runner.finished?).to eq(false)
+      end
+
+      after do
+        Timecop.return
+      end
+
+      context "#finished?" do
+
+        it "returns false if the runner is within its duration" do
+          Timecop.freeze(start_time + 59.99999)
+          expect(ping_runner.finished?).to eq(false)
+        end
+
+        it "returns false if the runner's current time is equal to its duration" do
+          Timecop.freeze(start_time + 60)
+          expect(ping_runner.finished?).to eq(false)
+        end
+
+        it "returns true if the runner's current time is greater than its duration" do
+          Timecop.freeze(start_time + 60.00001)
+          expect(ping_runner.finished?).to eq(true)
+        end
       end
     end
   end

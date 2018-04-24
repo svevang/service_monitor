@@ -38,5 +38,9 @@ module ServiceMonitor
       !!start_time
     end
 
+    def finished?
+      Time.now > start_time + options.duration
+    end
+
   end
 end
