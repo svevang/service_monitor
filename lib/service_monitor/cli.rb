@@ -9,6 +9,15 @@ module ServiceMonitor
 
     attr_reader :argv
 
+    def self.default_options(argv=[])
+      options = OpenStruct.new
+      options.duration = 60
+      options.interval = 10
+      options.request_help = argv.empty?
+      options.port = nil
+      options
+    end
+
     def initialize(argv)
       @argv = argv || []
     end
@@ -23,11 +32,7 @@ module ServiceMonitor
     # Convert argv into a set of options
     def parse(argv)
 
-      options = OpenStruct.new
-      options.duration = 60
-      options.interval = 10
-      options.request_help = argv.empty?
-
+      options = CLI.default_options(argv)
 
       opt_parser = OptionParser.new do |opts|
         opts.banner = 'Usage: service_monitor [options] <hostname>'
@@ -41,6 +46,10 @@ module ServiceMonitor
 
         opts.on('--interval N', Float, 'Time in seconds between individual service tests (pings).') do |interval|
           options.interval = interval
+        end
+
+        opts.on('--port N', Float, 'Port to target in ping test. Default http is port 80') do |port|
+          options.port = port
         end
 
         opts.on_tail('-h', '--help', 'Show this message') do |is_help|

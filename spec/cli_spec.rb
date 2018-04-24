@@ -30,7 +30,11 @@ RSpec.describe ServiceMonitor::CLI do
       subject(:options){ parsed_args[0] }
       subject(:host){ parsed_args[1] }
 
-      let(:argv) { ['--duration', '61', '--interval', '8', 'gitlab.com'] }
+      let(:argv) { ['--port', '9999', '--duration', '61', '--interval', '8', 'gitlab.com'] }
+
+      it 'accepts a `--port` argument' do
+        expect(options.port).to eq(9999)
+      end
 
       it 'accepts a `--duration` argument' do
         expect(options.duration).to eq(61)
