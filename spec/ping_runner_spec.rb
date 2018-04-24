@@ -43,5 +43,11 @@ RSpec.describe ServiceMonitor::PingRunner do
       expect(ping_runner.call).to eq(0.00001)
     end
 
+    it "sets a start time" do
+      ping_runner.call
+      expect(ping_runner.start_time).to be_truthy
+      expect(ping_runner.start_time.class).to be(Time)
+    end
+
   end
 end

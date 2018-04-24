@@ -3,11 +3,12 @@ require 'resolv'
 module ServiceMonitor
   class PingRunner
 
-    attr_reader :host, :options
+    attr_reader :host, :options, :start_time
 
     def initialize(host, options)
       @host = host
       @options = options
+      @start_time = nil
     end
 
     def host_exists?
@@ -20,6 +21,7 @@ module ServiceMonitor
 
     def call
       return -1 unless host_exists?
+      @start_time = Time.now
 
       pinger = setup_pinger
       ping_time = do_ping(pinger)
@@ -31,6 +33,10 @@ module ServiceMonitor
     def do_ping(pinger)
       pinger.ping
       pinger.duration
+    end
+
+    def started?
+      !!start_time
     end
 
   end
