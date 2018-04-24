@@ -1,26 +1,13 @@
 require 'resolv'
+require 'pry'
 
 module ServiceMonitor
   class PingRunner
-
-    attr_reader :host, :options, :start_time
 
     def initialize(host, options)
       @host = host
       @options = options
       @start_time = nil
-    end
-
-    def host_exists?
-      !!Resolv.getaddress(host)
-    end
-
-    def setup_pinger
-      Net::Ping::HTTP.new(host, port=options.port)
-    end
-
-    def print_ping(ping_time)
-        puts ping_time
     end
 
     def run!
@@ -39,6 +26,22 @@ module ServiceMonitor
       # TODO return something real here
       results.last
 
+    end
+
+    private
+
+    attr_reader :host, :options, :start_time
+
+    def host_exists?
+      !!Resolv.getaddress(host)
+    end
+
+    def setup_pinger
+      Net::Ping::HTTP.new(host, port=options.port)
+    end
+
+    def print_ping(ping_time)
+        puts ping_time
     end
 
     def seconds_until_interval(ping_offset)
