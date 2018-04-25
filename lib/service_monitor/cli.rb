@@ -59,7 +59,7 @@ module ServiceMonitor
       remaining_args = opt_parser.parse!(argv)
       hostname = remaining_args.pop
 
-      print_help(opt_parser) unless valid?(options, hostname)
+      print_help(opt_parser, hostname) unless valid?(options, hostname)
 
       [options, hostname]
     end
