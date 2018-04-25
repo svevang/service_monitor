@@ -59,9 +59,34 @@ RSpec.describe ServiceMonitor::PingRunner do
 
       it "sets a start time when the runner is called" do
         expect(ping_runner.send(:start_time)).to be_nil
-        ping_runner.run!
+
+        expect { ping_runner.run! }.to output(/0.01 ms/).to_stdout
+
         expect(ping_runner.send(:start_time)).to be_truthy
         expect(ping_runner.send(:start_time).class).to be(Time)
+      end
+
+      it "sets a results ivar after the run" do
+        expect { ping_runner.run! }.to output.to_stdout
+        expect(ping_runner.send(:results).class).to eq(Array)
+      end
+
+      context "#statistics" do
+        it "calculates statistics after a run is completed" do
+          expect(ping_runner.send(:results)).to eq(nil)
+          expect(ping_runner.statistics).to eq(nil)
+
+          expect { ping_runner.run! }.to output(/0.01 ms/).to_stdout
+
+          expect(ping_runner.send(:results).class).to eq(Array)
+          expect(ping_runner.statistics.class).to eq(Hash)
+        end
+
+        it "calculates a set of interesting statistics" do
+          expect { ping_runner.run! }.to output.to_stdout
+          stats = ping_runner.statistics
+          expect(stats.keys).to eq([:count, :min, :max, :stddev, :average, :p95, :p99])
+        end
       end
     end
 
