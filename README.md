@@ -1,4 +1,7 @@
 # ServiceMonitor
+[![Build
+Status](https://travis-ci.org/svevang/service_monitor.svg?branch=master)](https://travis-ci.org/svevang/service_monitor)
+
 
 Service Monitor is a command line tool that pings an http service.
 Response times are gathered up and some simple summary statistics.
