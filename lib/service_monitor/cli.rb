@@ -74,7 +74,7 @@ module ServiceMonitor
   private
 
     def print_help(opts, hostname)
-      puts "Service Monitor: Aggregate average response times across service types."
+      puts "Service Monitor: Aggregate average response times for a http/s service."
       puts opts
       if hostname.nil?
         puts ""
