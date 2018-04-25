@@ -19,7 +19,7 @@ module ServiceMonitor
       num_intervals.times do |i|
         break if finished?
         ping_time = do_ping(pinger)
-        results.append(ping_time)
+        results.push(ping_time)
 
         output_format.print_ping(ping_time)
         sleep(seconds_until_interval(i + 1))
