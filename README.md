@@ -1,15 +1,14 @@
 # ServiceMonitor
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/service_monitor`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Service Monitor is a command line tool that pings an http service.
+Response times are gathered up and some simple summary statistics.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'service_monitor'
+gem 'service_monitor', '~> 0.1.0' ,:git => "git@gitlab.com:vevang/service_monitor.git"
 ```
 
 And then execute:
@@ -18,21 +17,33 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install service_monitor
+  $ git clone https://gitlab.com/vevang/service_monitor.git
+
+  $ cd service_monitor/
+
+  $ bundle exec rake install
 
 ## Usage
 
-TODO: Write usage instructions here
+    Service Monitor: Aggregate average response times across service types.
+    Usage: service_monitor [options] <hostname>
+
+    Specific options:
+            --duration N                 Total duration in seconds of this
+    service testing cycle
+            --interval N                 Time in seconds between individual
+    service tests (pings).
+            --port N                     Port to target in ping test.
+    Default http is port 80
+        -h, --help                       Show this message
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/service_monitor. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on Gitlab at https://gitlab.com/vevang/service_monitor. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -40,4 +51,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the ServiceMonitor project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/service_monitor/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the ServiceMonitor project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://gitlab.com/vevang/service_monitor/blob/master/CODE_OF_CONDUCT.md).
