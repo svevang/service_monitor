@@ -47,7 +47,7 @@ module ServiceMonitor
           options.interval = interval
         end
 
-        opts.on("--port N", Float, "Port to target in ping test. Default http is port 80") do |port|
+        opts.on("--port N", Float, "Port to target in ping test. Default http is port 80 (http).", "Use 443 for a https request.") do |port|
           options.port = port
         end
 
