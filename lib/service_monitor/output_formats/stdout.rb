@@ -1,9 +1,7 @@
-require 'pry'
 module ServiceMonitor
   module OutputFormats
     class Stdout
       def print_statistics(stats)
-
         puts ""
         puts "count:   #{stats[:count]} pings"
         puts "min:     #{formatted_milli(stats[:min])}"

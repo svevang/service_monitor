@@ -1,5 +1,4 @@
 require "ostruct"
-require "pry"
 
 RSpec.describe ServiceMonitor::CLI do
   describe "#parse" do

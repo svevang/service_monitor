@@ -1,5 +1,4 @@
 require "resolv"
-require "pry"
 
 module ServiceMonitor
   class PingRunner

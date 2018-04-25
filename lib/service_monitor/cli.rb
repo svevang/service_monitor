@@ -1,7 +1,6 @@
 require "ostruct"
 require "optparse"
 require "descriptive_statistics"
-require "pry"
 
 module ServiceMonitor
   # Class for parsing command line opts for the service monitor app.

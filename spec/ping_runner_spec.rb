@@ -1,6 +1,5 @@
 require "ostruct"
 require "net/ping"
-require "pry"
 require "timecop"
 
 RSpec.describe ServiceMonitor::PingRunner do
