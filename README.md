@@ -3,6 +3,49 @@
 Service Monitor is a command line tool that pings an http service.
 Response times are gathered up and some simple summary statistics.
 
+## Quickstart
+
+By default, the cli `service_monitor` tool pings every 10 seconds for a
+total duration of 60 seconds. Simply supply a hostname, like this:
+
+```
+  $ service_monitor gitlab.com
+
+273.1 ms
+249.98 ms
+254.63 ms
+257.39 ms
+256.32 ms
+259.0 ms
+
+count:   6 pings
+min:     249.98 ms
+max:     273.1 ms
+stddev:  7.15 ms
+average: 258.4 ms
+p95:     269.58 ms
+p99:     272.4 ms
+```
+
+## Usage
+
+Usage information is as follows:
+
+```
+Service Monitor: Aggregate average response times for a http/s service.
+Usage: service_monitor [options] <hostname>
+
+Specific options:
+        --duration N                 Total duration in seconds of this
+service testing cycle
+        --interval N                 Time in seconds between individual
+service tests (pings).
+        --port N                     Port to target in ping test.
+Default http is port 80 (http).
+                                     Use 443 for a https request.
+    -h, --help                       Show this message
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -23,19 +66,6 @@ Or install it yourself as:
 
   $ bundle exec rake install
 
-## Usage
-
-    Service Monitor: Aggregate average response times across service types.
-    Usage: service_monitor [options] <hostname>
-
-    Specific options:
-            --duration N                 Total duration in seconds of this
-    service testing cycle
-            --interval N                 Time in seconds between individual
-    service tests (pings).
-            --port N                     Port to target in ping test.
-    Default http is port 80
-        -h, --help                       Show this message
 
 ## Development
 
