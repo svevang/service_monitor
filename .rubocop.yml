@@ -1,0 +1,184 @@
+AllCops:
+  TargetRubyVersion: 2.2
+
+Metrics/ParameterLists:
+  Max: 6
+  CountKeywordArgs: true
+
+Metrics/MethodLength:
+  Max: 25
+  CountComments: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/ClassLength:
+  Max: 300
+
+Metrics/ModuleLength:
+  Max: 300
+
+Metrics/BlockLength:
+  Max: 30
+
+Metrics/CyclomaticComplexity:
+  Max: 12
+
+Metrics/PerceivedComplexity:
+  Max: 15
+
+BlockNesting:
+  Max: 4
+
+Metrics/LineLength:
+  Enabled: false
+
+AccessModifierIndentation:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+# Enforce Ruby 1.8-compatible hash syntax
+HashSyntax:
+  EnforcedStyle: hash_rockets
+
+# No spaces inside hash literals
+SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+# Allow dots at the end of lines
+DotPosition:
+  Enabled: false
+
+# Don't require magic comment at the top of every file
+Encoding:
+  Enabled: false
+
+# Enforce outdenting of access modifiers (i.e. public, private, protected)
+AccessModifierIndentation:
+  EnforcedStyle: outdent
+
+EmptyLinesAroundAccessModifier:
+  Enabled: true
+
+# Align ends correctly
+EndAlignment:
+  EnforcedStyleAlignWith: variable
+
+# Indentation of when/else
+CaseIndentation:
+  EnforcedStyle: end
+  IndentOneStep: false
+
+DoubleNegation:
+  Enabled: false
+
+StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/SymbolLiteral:
+  Enabled: false
+
+Lint/AssignmentInCondition:
+  Exclude:
+    - 'lib/thor/line_editor/readline.rb'
+    - 'lib/thor/parser/arguments.rb'
+
+Lint/EndAlignment:
+  Exclude:
+    - 'lib/thor/actions.rb'
+    - 'lib/thor/parser/option.rb'
+
+Security/Eval:
+  Exclude:
+    - 'spec/helper.rb'
+
+Lint/HandleExceptions:
+  Exclude:
+    - 'lib/thor/line_editor/readline.rb'
+
+Lint/PercentStringArray:
+  Exclude:
+    - 'spec/parser/options_spec.rb'
+
+Lint/UnusedMethodArgument:
+  Exclude:
+    - 'lib/thor.rb'
+    - 'lib/thor/base.rb'
+    - 'lib/thor/command.rb'
+    - 'lib/thor/parser/arguments.rb'
+    - 'lib/thor/shell/html.rb'
+    - 'spec/actions/empty_directory_spec.rb'
+
+Style/AccessorMethodName:
+  Exclude:
+    - 'lib/thor/line_editor/basic.rb'
+
+Style/Alias:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'lib/thor/group.rb'
+    - 'lib/thor/runner.rb'
+    - 'spec/shell_spec.rb'
+    - 'spec/util_spec.rb'
+
+Style/ClassVars:
+  Exclude:
+    - 'lib/thor/util.rb'
+    - 'spec/util_spec.rb'
+
+Style/ConstantName:
+  Exclude:
+    - 'spec/line_editor_spec.rb'
+
+Style/GlobalVars:
+  Exclude:
+    - 'bin/thor'
+    - 'lib/thor.rb'
+    - 'lib/thor/base.rb'
+    - 'lib/thor/shell/basic.rb'
+    - 'spec/helper.rb'
+    - 'spec/rake_compat_spec.rb'
+    - 'spec/register_spec.rb'
+    - 'spec/thor_spec.rb'
+
+Style/IndentArray:
+  EnforcedStyle: consistent
+
+Style/MethodMissing:
+  Exclude:
+    - 'lib/thor/core_ext/hash_with_indifferent_access.rb'
+    - 'lib/thor/runner.rb'
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/NumericLiteralPrefix:
+  Exclude:
+    - 'spec/actions/file_manipulation_spec.rb'
+
+Style/NumericPredicate:
+  Exclude:
+    - 'spec/**/*'
+    - 'lib/thor/parser/option.rb'
+
+Style/PerlBackrefs:
+  Exclude:
+    - 'lib/thor/actions/empty_directory.rb'
+    - 'lib/thor/core_ext/hash_with_indifferent_access.rb'
+    - 'lib/thor/parser/arguments.rb'
+    - 'lib/thor/parser/options.rb'
+
+Style/TrailingUnderscoreVariable:
+  Exclude:
+    - 'lib/thor/group.rb'
+
+Style/TrailingWhitespace:
+  Exclude:
+    - 'spec/shell/basic_spec.rb'
+
+Style/AlignParameters:
+  Enabled: false

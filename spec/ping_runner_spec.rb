@@ -1,19 +1,19 @@
-require 'ostruct'
-require 'net/ping'
-require 'pry'
-require 'timecop'
+require "ostruct"
+require "net/ping"
+require "pry"
+require "timecop"
 
 RSpec.describe ServiceMonitor::PingRunner do
   let(:interval) { 0.0001 }
   let(:duration) { 0.001 }
 
-  let(:options) do 
+  let(:options) do
     options = ServiceMonitor::CLI.default_options
     options.duration = duration
     options.interval = interval
     options
   end
-  let(:host) { 'gitlab.com' }
+  let(:host) { "gitlab.com" }
   let(:ping_runner) { ServiceMonitor::PingRunner.new(host, options) }
 
   before do
@@ -23,25 +23,23 @@ RSpec.describe ServiceMonitor::PingRunner do
   context "#setup_pinger" do
     subject(:http_pinger) { ping_runner.send(:setup_pinger) }
 
-    it { expect(http_pinger.host).to eq('gitlab.com') }
+    it { expect(http_pinger.host).to eq("gitlab.com") }
     it { expect(http_pinger.port).to eq(80) }
 
     context "Customized port changes pinger port ivars" do
-      let(:options){
+      let(:options) do
         options = ServiceMonitor::CLI.default_options
         options.duration = duration
         options.interval = interval
         options.port = 443
         options
-      }
+      end
 
       it { expect(http_pinger.port).to eq(443) }
     end
-
   end
 
   context "PingRunner is invoked" do
-
     context "#do_ping" do
       it "pinger library instance expects invocation of #ping" do
         # mock the pinger class from 'net/ping' and return a fixed duration
@@ -85,7 +83,7 @@ RSpec.describe ServiceMonitor::PingRunner do
         it "calculates a set of interesting statistics" do
           expect { ping_runner.run! }.to output.to_stdout
           stats = ping_runner.statistics
-          expect(stats.keys).to eq([:count, :min, :max, :stddev, :average, :p95, :p99])
+          expect(stats.keys).to eq(%i[count min max stddev average p95 p99])
         end
       end
     end
@@ -97,7 +95,6 @@ RSpec.describe ServiceMonitor::PingRunner do
         expect(ping_runner.send(:started?)).to eq(true)
       end
     end
-
   end
 
   context "PingRunner measures time" do
@@ -115,7 +112,6 @@ RSpec.describe ServiceMonitor::PingRunner do
     end
 
     context "#start!" do
-
       it "is idemopotent across multiple invocations" do
         expect(ping_runner.send(:start_time)).to eq(start_time)
 
@@ -125,11 +121,9 @@ RSpec.describe ServiceMonitor::PingRunner do
 
         expect(ping_runner.send(:start_time)).to eq(start_time)
       end
-
     end
 
     context "#finished?" do
-
       it "returns false if the runner is within its duration" do
         expect(ping_runner.send(:finished?)).to eq(false)
         Timecop.freeze(start_time + 59.99999)
@@ -160,16 +154,15 @@ RSpec.describe ServiceMonitor::PingRunner do
     context "#num_intervals" do
       it "calculates how many times the PingRunner will ping" do
         # 10 second intervals over 60 seconds
-        expect(ping_runner.send :num_intervals).to eq(6)
+        expect(ping_runner.send(:num_intervals)).to eq(6)
       end
     end
 
     context "seconds_until_interval" do
-
       it "calculates how many seconds until the i'th interval begins" do
-        expect(ping_runner.send(:seconds_until_interval,0)).to eq(0)
-        expect(ping_runner.send(:seconds_until_interval,1)).to eq(10)
-        expect(ping_runner.send(:seconds_until_interval,9)).to eq(90)
+        expect(ping_runner.send(:seconds_until_interval, 0)).to eq(0)
+        expect(ping_runner.send(:seconds_until_interval, 1)).to eq(10)
+        expect(ping_runner.send(:seconds_until_interval, 9)).to eq(90)
       end
 
       it "should return 0 for negative times" do

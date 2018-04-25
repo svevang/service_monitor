@@ -1,9 +1,8 @@
-require 'pry'
+require "pry"
 module ServiceMonitor
   module OutputFormats
     class Stdout
       def print_statistics(stats)
-
         puts ""
         puts "min:     #{formatted_milli(stats[:min])}"
         puts "max:     #{formatted_milli(stats[:max])}"
@@ -18,7 +17,7 @@ module ServiceMonitor
         puts formatted_milli(seconds)
       end
 
-      private
+    private
 
       def formatted_milli(seconds)
         millis = (seconds * 1000).round(2)

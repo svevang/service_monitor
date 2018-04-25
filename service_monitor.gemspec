@@ -1,5 +1,5 @@
 
-lib = File.expand_path("../lib", __FILE__)
+lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "service_monitor/version"
 
@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Sam Vevang"]
   spec.email         = ["sam.vevang@gmail.com"]
 
-  spec.summary       = %q{Gather average response times from a online service.}
-  spec.description   = %q{Probe a service across a fixed interval of time, calculate the average response times and display those to the user.}
+  spec.summary       = "Gather average response times from a online service."
+  spec.description   = "Probe a service across a fixed interval of time, calculate the average response times and display those to the user."
   spec.homepage      = "https://gitlab.com/vevang/service_monitor"
   spec.license       = "MIT"
 
@@ -23,18 +23,18 @@ Gem::Specification.new do |spec|
       "public gem pushes."
   end
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+  spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
   spec.bindir        = "bin"
   spec.executables   = ["service_monitor"]
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "net-ping", "~> 2.0"
   spec.add_dependency "descriptive_statistics", "~> 2.4"
+  spec.add_dependency "net-ping", "~> 2.0"
   spec.add_development_dependency "bundler", "~> 1.16"
+  spec.add_development_dependency "pry", "~> 0.11"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "pry", "~> 0.11"
   spec.add_development_dependency "timecop", "~> 0.9"
 end

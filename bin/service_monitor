@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'service_monitor'
+require "service_monitor"
 
 ServiceMonitor::CLI.new(ARGV).call
-

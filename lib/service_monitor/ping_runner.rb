@@ -1,9 +1,8 @@
-require 'resolv'
-require 'pry'
+require "resolv"
+require "pry"
 
 module ServiceMonitor
   class PingRunner
-
     def initialize(host, options)
       @host = host
       @options = options
@@ -23,7 +22,7 @@ module ServiceMonitor
         results.append(ping_time)
 
         output_format.print_ping(ping_time)
-        sleep(seconds_until_interval(i+1))
+        sleep(seconds_until_interval(i + 1))
       end
 
       output_format.print_statistics(statistics)
@@ -34,17 +33,17 @@ module ServiceMonitor
     def statistics
       return if results.nil?
       {
-        count:   results.length,
-        min:     results.min,
-        max:     results.max,
-        stddev:  results.standard_deviation,
-        average: results.mean,
-        p95:     results.percentile(95),
-        p99:     results.percentile(99),
+        :count => results.length,
+        :min => results.min,
+        :max => results.max,
+        :stddev => results.standard_deviation,
+        :average => results.mean,
+        :p95 => results.percentile(95),
+        :p99 => results.percentile(99)
       }
     end
 
-    private
+  private
 
     attr_reader :host, :options, :start_time, :results, :output_format
 
@@ -53,7 +52,7 @@ module ServiceMonitor
     end
 
     def setup_pinger
-      Net::Ping::HTTP.new(host, port=options.port)
+      Net::Ping::HTTP.new(host, port = options.port)
     end
 
     def seconds_until_interval(ping_offset)
@@ -90,6 +89,5 @@ module ServiceMonitor
     def finished?
       Time.now > start_time + options.duration
     end
-
   end
 end
