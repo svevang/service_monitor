@@ -1,6 +1,8 @@
 # ServiceMonitor
 [![Build
 Status](https://travis-ci.org/svevang/service_monitor.svg?branch=master)](https://travis-ci.org/svevang/service_monitor)
+[![pipeline
+status](https://gitlab.com/vevang/service_monitor/badges/master/pipeline.svg)](https://gitlab.com/vevang/service_monitor/commits/master)
 
 
 Service Monitor is a command line tool that pings an http service.
