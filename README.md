@@ -5,8 +5,10 @@ Status](https://travis-ci.org/svevang/service_monitor.svg?branch=master)](https:
 status](https://gitlab.com/vevang/service_monitor/badges/master/pipeline.svg)](https://gitlab.com/vevang/service_monitor/commits/master)
 
 
-Service Monitor is a command line tool that pings an http service.
-Response times are gathered up and some simple summary statistics.
+Service Monitor is a command line program that pings a http service to
+measure latency. Response times are printed as the pings return.
+Finally, some summary statistics of the ping run are calculated and
+printed.
 
 ## Quickstart
 
@@ -24,6 +26,7 @@ total duration of 60 seconds. Simply supply a hostname, like this:
 259.0 ms
 
 count:   6 pings
+errors:  0 errors
 min:     249.98 ms
 max:     273.1 ms
 stddev:  7.15 ms

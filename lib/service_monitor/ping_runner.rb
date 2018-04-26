@@ -55,7 +55,7 @@ module ServiceMonitor
     end
 
     def setup_pinger
-      Net::Ping::HTTP.new(host, port = options.port, timeout=options.interval)
+      Net::Ping::HTTP.new(host, port = options.port, timeout = options.interval)
     end
 
     def seconds_until_interval(ping_offset)
