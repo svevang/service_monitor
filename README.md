@@ -56,7 +56,19 @@ Default http is port 80 (http).
 
 ## Installation
 
-Add this line to your application's Gemfile:
+To install the `service_monitor` program:
+
+```
+$ git clone https://gitlab.com/vevang/service_monitor.git
+
+$ cd service_monitor/
+
+$ bundle exec rake install
+```
+
+At this poing you should be able to run `service_monitor --help`
+
+If you want to use this gem as part of some other code, add this line to your application's Gemfile:
 
 ```ruby
 gem 'service_monitor', '~> 0.1.0' ,:git => "git@gitlab.com:vevang/service_monitor.git"
@@ -65,14 +77,6 @@ gem 'service_monitor', '~> 0.1.0' ,:git => "git@gitlab.com:vevang/service_monito
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-  $ git clone https://gitlab.com/vevang/service_monitor.git
-
-  $ cd service_monitor/
-
-  $ bundle exec rake install
 
 
 ## Development

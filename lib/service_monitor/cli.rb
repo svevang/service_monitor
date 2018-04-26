@@ -25,7 +25,7 @@ module ServiceMonitor
       return -1 unless valid?(options, hostname)
 
       ServiceMonitor::PingRunner.new(hostname, options).run!
-      return 0
+      0
     end
 
     # Convert argv into a set of options
