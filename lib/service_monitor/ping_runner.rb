@@ -1,4 +1,5 @@
 require "resolv"
+require "descriptive_statistics"
 
 module ServiceMonitor
   class PingRunner
