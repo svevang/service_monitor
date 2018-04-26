@@ -39,19 +39,19 @@ RSpec.describe ServiceMonitor::PingRunner do
   end
 
   context "PingRunner is invoked" do
-    context "#do_ping" do
+    context "#do_ping!" do
       it "pinger library instance expects invocation of #ping" do
         # mock the pinger class from 'net/ping' and return a fixed duration
         pinger = ping_runner.send(:setup_pinger)
         expect(pinger).to receive(:ping).at_least(:once)
         expect(pinger).to receive(:duration).at_least(:once) { 0.33333 }
-        expect(ping_runner.send(:do_ping, pinger)).to eq(0.33333)
+        expect(ping_runner.send(:do_ping!, pinger)).to eq(0.33333)
       end
     end
 
     context "#run!" do
       before do
-        expect(ping_runner).to receive(:do_ping).at_least(:once).with(Net::Ping) { 0.00001 }
+        expect(ping_runner).to receive(:do_ping!).at_least(:once).with(Net::Ping) { 0.00001 }
       end
 
       it "sets a start time when the runner is called" do

@@ -18,7 +18,7 @@ module ServiceMonitor
       pinger = setup_pinger
       num_intervals.times do |i|
         break if finished?
-        ping_time = do_ping(pinger)
+        ping_time = do_ping!(pinger)
         results.push(ping_time)
 
         output_format.print_ping(ping_time)
@@ -77,7 +77,7 @@ module ServiceMonitor
       (options.duration / options.interval.to_f).floor
     end
 
-    def do_ping(pinger)
+    def do_ping!(pinger)
       pinger.ping
       pinger.duration
     end
