@@ -4,6 +4,7 @@ module ServiceMonitor
       def print_statistics(stats)
         puts ""
         puts "count:   #{stats[:count]} pings"
+        puts "errors:  #{stats[:errors]} errors"
         puts "min:     #{formatted_milli(stats[:min])}"
         puts "max:     #{formatted_milli(stats[:max])}"
         puts "stddev:  #{formatted_milli(stats[:stddev])}"
@@ -11,6 +12,10 @@ module ServiceMonitor
 
         puts "p95:     #{formatted_milli(stats[:p95])}"
         puts "p99:     #{formatted_milli(stats[:p99])}"
+      end
+
+      def print_error(message)
+        puts message
       end
 
       def print_ping(seconds)

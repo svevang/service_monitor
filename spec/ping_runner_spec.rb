@@ -42,16 +42,18 @@ RSpec.describe ServiceMonitor::PingRunner do
     context "#do_ping!" do
       it "pinger library instance expects invocation of #ping" do
         # mock the pinger class from 'net/ping' and return a fixed duration
-        pinger = ping_runner.send(:setup_pinger)
+        pinger = ping_runner.send(:pinger)
         expect(pinger).to receive(:ping).at_least(:once)
         expect(pinger).to receive(:duration).at_least(:once) { 0.33333 }
-        expect(ping_runner.send(:do_ping!, pinger)).to eq(0.33333)
+        ping_runner.send(:do_ping!)
       end
     end
 
     context "#run!" do
       before do
-        expect(ping_runner).to receive(:do_ping!).at_least(:once).with(Net::Ping) { 0.00001 }
+        expect(ping_runner.send(:pinger)).to be_instance_of(Net::Ping::HTTP)
+        expect(ping_runner.send(:pinger)).to receive(:ping).at_least(:once)
+        expect(ping_runner.send(:pinger)).to receive(:duration).at_least(:once) { 0.00001 }
       end
 
       it "sets a start time when the runner is called" do
@@ -70,19 +72,19 @@ RSpec.describe ServiceMonitor::PingRunner do
 
       context "#statistics" do
         it "calculates statistics after a run is completed" do
-          expect(ping_runner.send(:results)).to eq(nil)
+          expect(ping_runner.send(:results)).to eq([])
           expect(ping_runner.statistics).to eq(nil)
 
           expect { ping_runner.run! }.to output(/0.01 ms/).to_stdout
 
-          expect(ping_runner.send(:results).class).to eq(Array)
+          expect(ping_runner.send(:results).empty?).to eq(false)
           expect(ping_runner.statistics.class).to eq(Hash)
         end
 
         it "calculates a set of interesting statistics" do
           expect { ping_runner.run! }.to output.to_stdout
           stats = ping_runner.statistics
-          expect(stats.keys).to eq(%i[count min max stddev average p95 p99])
+          expect(stats.keys).to eq(%i[count errors min max stddev average p95 p99])
         end
       end
     end

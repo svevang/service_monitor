@@ -8,20 +8,22 @@ module ServiceMonitor
       @options = options
       @start_time = nil
       @output_format = ServiceMonitor::OutputFormats::Stdout.new
+      @pinger = setup_pinger
+      @results = []
+      @errors = []
     end
 
     def run!
       return -1 unless host_exists?
       start!
 
-      @results = []
-      pinger = setup_pinger
+      results.clear
+      errors.clear
       num_intervals.times do |i|
         break if finished?
-        ping_time = do_ping!(pinger)
-        results.push(ping_time)
 
-        output_format.print_ping(ping_time)
+        do_ping!
+
         sleep(seconds_until_interval(i + 1))
       end
 
@@ -31,9 +33,10 @@ module ServiceMonitor
     end
 
     def statistics
-      return if results.nil?
+      return if results.empty?
       {
         :count => results.length,
+        :errors => errors.length,
         :min => results.min,
         :max => results.max,
         :stddev => results.standard_deviation,
@@ -45,7 +48,7 @@ module ServiceMonitor
 
   private
 
-    attr_reader :host, :options, :start_time, :results, :output_format
+    attr_reader :host, :options, :start_time, :results, :errors, :output_format, :pinger
 
     def host_exists?
       !!Resolv.getaddress(host)
@@ -77,9 +80,15 @@ module ServiceMonitor
       (options.duration / options.interval.to_f).floor
     end
 
-    def do_ping!(pinger)
+    def do_ping!
       pinger.ping
-      pinger.duration
+      if pinger.exception
+        errors.push(pinger.exception)
+        output_format.print_error(pinger.exception)
+      else
+        results.push(pinger.duration)
+        output_format.print_ping(pinger.duration)
+      end
     end
 
     def started?
