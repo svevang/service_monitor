@@ -10,6 +10,17 @@ measure latency. Response times are printed as the pings return.
 Finally, some summary statistics of the ping run are calculated and
 printed.
 
+## Motivation
+
+The challenge was to create a greenfield ruby gem highlighting
+the following characteristics:
+
+* Ruby gem
+* Exposes a CLI to check the status of of a webpage (e.g. https://gitlab.com)
+* Reports an average response time after probing the site every 10 seconds for a one minute.
+* It should be to be maintainable in a long term by more than one maintainer.
+
+
 ## Quickstart
 
 By default, the cli `service_monitor` tool pings every 10 seconds for a
@@ -66,7 +77,7 @@ $ cd service_monitor/
 $ bundle exec rake install
 ```
 
-At this poing you should be able to run `service_monitor --help`
+At this point you should be able to run `service_monitor --help`
 
 If you want to use this gem as part of some other code, add this line to your application's Gemfile:
 
